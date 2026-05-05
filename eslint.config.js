@@ -8,7 +8,7 @@ import { defineConfig, globalIgnores } from 'eslint/config'
 export default defineConfig([
   globalIgnores(['dist']),
   {
-    files: ['**/*.{ts,tsx}'],
+    files: ['**/*.{js,jsx,ts,tsx}'],
     extends: [
       js.configs.recommended,
       tseslint.configs.recommended,
@@ -17,6 +17,18 @@ export default defineConfig([
     ],
     languageOptions: {
       globals: globals.browser,
+    },
+    rules: {
+      'semi': ['error', 'never'],
+      'max-len': ['error', { code: 120 }],
+      'no-var': 'error',
+      'prefer-const': 'error',
+      'quotes': ['error', 'single'],
+      'indent': ['error', 2],
+      'comma-dangle': ['error', 'always-multiline'],
+      'space-before-function-paren': ['error', 'always'],
+      'keyword-spacing': ['error', { before: true, after: true }],
+      'eol-last': ['error', 'always'],
     },
   },
 ])
