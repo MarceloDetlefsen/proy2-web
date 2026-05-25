@@ -39,6 +39,76 @@ describe('Calculator', () => {
     })
   })
 
+  describe('cuando el usuario presiona AC', () => {
+    it('debe limpiar el display y resetear la operación pendiente', () => {
+      const { result } = renderHook(() => useCalculator())
+      act(() => {
+        result.current.handleNumber('5')
+        result.current.handleOperation('+')
+        result.current.handleClear()
+      })
+      expect(result.current.display).toBe('')
+
+      act(() => result.current.handleNumber('3'))
+      expect(result.current.display).toBe('3')
+    })
+  })
+
+  describe('cuando el usuario presiona modulo', () => {
+    it('debe mostrar el residuo de la operación', () => {
+      const { result } = renderHook(() => useCalculator())
+      act(() => {
+        result.current.handleNumber('1')
+        result.current.handleNumber('0')
+        result.current.handleOperation('%')
+      })
+      act(() => {
+        result.current.handleNumber('3')
+        result.current.handleEquals()
+      })
+      expect(result.current.display).toBe('1')
+    })
+  })
+
+  describe('cuando el usuario presiona punto decimal', () => {
+    it('debe concatenarlo al número actual', () => {
+      const { result } = renderHook(() => useCalculator())
+      act(() => { result.current.handleNumber('1'); result.current.handleDecimal(); result.current.handleNumber('5') })
+      expect(result.current.display).toBe('1.5')
+    })
+
+    it('debe ignorar un segundo punto decimal', () => {
+      const { result } = renderHook(() => useCalculator())
+      act(() => { result.current.handleNumber('1'); result.current.handleDecimal(); result.current.handleDecimal() })
+      expect(result.current.display).toBe('1.')
+    })
+  })
+
+  describe('cuando el usuario presiona +/-', () => {
+    it('debe convertir el número en negativo', () => {
+      const { result } = renderHook(() => useCalculator())
+      act(() => { result.current.handleNumber('5'); result.current.handleToggleSign() })
+      expect(result.current.display).toBe('-5')
+    })
+
+    it('debe volver al positivo al presionarlo otra vez', () => {
+      const { result } = renderHook(() => useCalculator())
+      act(() => {
+        result.current.handleNumber('5')
+        result.current.handleToggleSign()
+        result.current.handleToggleSign()
+      })
+      expect(result.current.display).toBe('5')
+    })
+
+    it('debe empezar el siguiente operando como negativo después de una operación', () => {
+      const { result } = renderHook(() => useCalculator())
+      act(() => { result.current.handleNumber('5'); result.current.handleOperation('+') })
+      act(() => { result.current.handleToggleSign(); result.current.handleNumber('3'); result.current.handleEquals() })
+      expect(result.current.display).toBe('2')
+    })
+  })
+
   describe('cuando el usuario presiona igual', () => {
     it('debe mostrar el resultado de la operación', () => {
       const { result } = renderHook(() => useCalculator())
