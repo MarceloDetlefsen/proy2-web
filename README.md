@@ -1,1 +1,1 @@
-# Laboratorio 8 - Sistemas y Tecnologías Web
+# Proyecto 2 - Sistemas y Tecnologías Web
