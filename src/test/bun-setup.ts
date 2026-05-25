@@ -16,5 +16,10 @@ globalThis.Event = window.Event
 globalThis.CustomEvent = window.CustomEvent
 globalThis.getComputedStyle = window.getComputedStyle.bind(window)
 globalThis.MutationObserver = window.MutationObserver
-globalThis.requestAnimationFrame = window.requestAnimationFrame?.bind(window) ?? ((callback: FrameRequestCallback) => setTimeout(() => callback(Date.now()), 0) as unknown as number)
-globalThis.cancelAnimationFrame = window.cancelAnimationFrame?.bind(window) ?? ((handle: number) => clearTimeout(handle))
+globalThis.requestAnimationFrame =
+  window.requestAnimationFrame?.bind(window) ??
+  ((callback: FrameRequestCallback) =>
+    setTimeout(() => callback(Date.now()), 0) as unknown as number)
+globalThis.cancelAnimationFrame =
+  window.cancelAnimationFrame?.bind(window) ??
+  ((handle: number) => clearTimeout(handle))

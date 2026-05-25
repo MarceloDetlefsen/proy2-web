@@ -5,14 +5,18 @@ type Operation = '+' | '-' | '*'
 const MAX_DISPLAY_LENGTH = 9
 const MAX_RESULT = 999999999
 
-const calculate = (left: number, right: number, operation: Operation): number => {
+const calculate = (
+  left: number,
+  right: number,
+  operation: Operation,
+): number => {
   switch (operation) {
-    case '+':
-      return left + right
-    case '-':
-      return left - right
-    case '*':
-      return left * right
+  case '+':
+    return left + right
+  case '-':
+    return left - right
+  case '*':
+    return left * right
   }
 }
 
@@ -82,7 +86,10 @@ export const useCalculator = () => {
       return
     }
 
-    if (displayRef.current !== '' && !awaitingSecondOperandRef.current) {
+    if (
+      displayRef.current !== ''
+      && !awaitingSecondOperandRef.current
+    ) {
       const currentValue = Number(displayRef.current)
 
       if (storedValueRef.current === null) {
@@ -100,7 +107,12 @@ export const useCalculator = () => {
   }
 
   const handleEquals = () => {
-    if (displayRef.current === 'ERROR' || storedValueRef.current === null || operatorRef.current === null || displayRef.current === '') {
+    if (
+      displayRef.current === 'ERROR'
+      || storedValueRef.current === null
+      || operatorRef.current === null
+      || displayRef.current === ''
+    ) {
       return
     }
 
