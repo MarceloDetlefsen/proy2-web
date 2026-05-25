@@ -12,8 +12,11 @@ const meta = {
   },
   tags: ['autodocs', 'test'],
   args: {
+    onClear: fn(),
     onNumber: fn(),
     onOperation: fn(),
+    onDecimal: fn(),
+    onToggleSign: fn(),
     onEquals: fn(),
   },
 } satisfies Meta<typeof Keyboard>
