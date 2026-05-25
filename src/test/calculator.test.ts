@@ -48,7 +48,6 @@ describe('Calculator', () => {
         result.current.handleClear()
       })
       expect(result.current.display).toBe('')
-
       act(() => result.current.handleNumber('3'))
       expect(result.current.display).toBe('3')
     })
@@ -62,24 +61,57 @@ describe('Calculator', () => {
         result.current.handleNumber('0')
         result.current.handleOperation('%')
       })
-      act(() => {
-        result.current.handleNumber('3')
-        result.current.handleEquals()
-      })
+      act(() => { result.current.handleNumber('3'); result.current.handleEquals() })
       expect(result.current.display).toBe('1')
+    })
+  })
+
+  describe('cuando el usuario presiona división', () => {
+    it('debe mostrar el cociente exacto', () => {
+      const { result } = renderHook(() => useCalculator())
+      act(() => { result.current.handleNumber('8'); result.current.handleOperation('/') })
+      act(() => { result.current.handleNumber('4'); result.current.handleEquals() })
+      expect(result.current.display).toBe('2')
+    })
+
+    it('debe mostrar cociente decimal truncado a 9 caracteres (22/7)', () => {
+      const { result } = renderHook(() => useCalculator())
+      act(() => {
+        result.current.handleNumber('2')
+        result.current.handleNumber('2')
+        result.current.handleOperation('/')
+      })
+      act(() => { result.current.handleNumber('7'); result.current.handleEquals() })
+      expect(result.current.display.length).toBeLessThanOrEqual(9)
+      expect(parseFloat(result.current.display)).toBeCloseTo(22 / 7, 4)
+    })
+
+    it('debe mostrar ERROR al dividir entre cero', () => {
+      const { result } = renderHook(() => useCalculator())
+      act(() => { result.current.handleNumber('5'); result.current.handleOperation('/') })
+      act(() => { result.current.handleNumber('0'); result.current.handleEquals() })
+      expect(result.current.display).toBe('ERROR')
     })
   })
 
   describe('cuando el usuario presiona punto decimal', () => {
     it('debe concatenarlo al número actual', () => {
       const { result } = renderHook(() => useCalculator())
-      act(() => { result.current.handleNumber('1'); result.current.handleDecimal(); result.current.handleNumber('5') })
+      act(() => {
+        result.current.handleNumber('1')
+        result.current.handleDecimal()
+        result.current.handleNumber('5')
+      })
       expect(result.current.display).toBe('1.5')
     })
 
     it('debe ignorar un segundo punto decimal', () => {
       const { result } = renderHook(() => useCalculator())
-      act(() => { result.current.handleNumber('1'); result.current.handleDecimal(); result.current.handleDecimal() })
+      act(() => {
+        result.current.handleNumber('1')
+        result.current.handleDecimal()
+        result.current.handleDecimal()
+      })
       expect(result.current.display).toBe('1.')
     })
   })
@@ -116,20 +148,28 @@ describe('Calculator', () => {
       act(() => { result.current.handleNumber('3'); result.current.handleEquals() })
       expect(result.current.display).toBe('12')
     })
-  })
 
-  describe('cuando el resultado es inválido', () => {
-    it('debe mostrar ERROR si el resultado es negativo', () => {
+    it('debe permitir resultados negativos (resta)', () => {
       const { result } = renderHook(() => useCalculator())
       act(() => { result.current.handleNumber('3'); result.current.handleOperation('-') })
       act(() => { result.current.handleNumber('5'); result.current.handleEquals() })
-      expect(result.current.display).toBe('ERROR')
+      expect(result.current.display).toBe('-2')
     })
+  })
 
+  describe('cuando el resultado es inválido', () => {
     it('debe mostrar ERROR si el resultado supera 999999999', () => {
       const { result } = renderHook(() => useCalculator())
       act(() => { result.current.handleNumber('999999999'); result.current.handleOperation('+') })
       act(() => { result.current.handleNumber('1'); result.current.handleEquals() })
+      expect(result.current.display).toBe('ERROR')
+    })
+
+    it('debe mostrar ERROR si el resultado es menor a -999999999', () => {
+      const { result } = renderHook(() => useCalculator())
+      act(() => { result.current.handleNumber('999999999'); result.current.handleOperation('*') })
+      act(() => { result.current.handleToggleSign(); result.current.handleNumber('2') })
+      act(() => { result.current.handleEquals() })
       expect(result.current.display).toBe('ERROR')
     })
   })
