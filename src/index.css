@@ -34,14 +34,14 @@ body {
   background: var(--panel);
   border: 1px solid var(--border);
   border-radius: 18px;
-  padding: 20px 32px 32px;
-  width: 560px;
+  padding: 24px 40px 40px;
+  width: 700px;
   box-shadow:
     0 20px 60px rgba(0,0,0,.18),
     0 0 0 1px rgba(14,165,233,.15);
   position: relative;
   display: grid;
-  gap: 24px;
+  gap: 30px;
   animation: fade-up .4s cubic-bezier(.22,1,.36,1) both;
 }
 
@@ -52,7 +52,7 @@ body {
 
 .calculator__header h2 {
   font-family: var(--jersey);
-  font-size: 20px;
+  font-size: 24px;
   letter-spacing: .4em;
   color: var(--cyan-dim);
   white-space: nowrap;
@@ -61,7 +61,7 @@ body {
 .calculator::before {
   content: '';
   position: absolute;
-  top: 0; left: 40px; right: 40px;
+  top: 0; left: 48px; right: 48px;
   height: 2px;
   background: linear-gradient(90deg, transparent, var(--cyan), transparent);
   border-radius: 0 0 2px 2px;
@@ -73,17 +73,17 @@ output[aria-label="calculator display"] {
   background: #0f172a;
   border: 1px solid #1e293b;
   border-radius: var(--radius);
-  padding: 20px 24px 16px;
+  padding: 24px 28px 20px;
   text-align: right;
   font-family: var(--mono);
-  font-size: 4rem;
+  font-size: 4.8rem;
   letter-spacing: .04em;
   line-height: 1;
   color: var(--cyan-glow);
   text-shadow:
     0 0 12px rgba(56,189,248,.65),
     0 0 32px rgba(56,189,248,.25);
-  min-height: 96px;
+  min-height: 120px;
   overflow: hidden;
   background-image:
     repeating-linear-gradient(
@@ -104,13 +104,13 @@ output[aria-label="calculator display"][data-error="true"] {
 /* ── Keyboard ── */
 .keyboard {
   display: grid;
-  gap: 12px;
+  gap: 14px;
 }
 
 .keyboard-row {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
+  gap: 14px;
 }
 
 .keyboard-row--utilities {
@@ -126,8 +126,8 @@ output[aria-label="calculator display"][data-error="true"] {
 }
 
 .keyboard-row__github svg {
-  width: 34px;
-  height: 34px;
+  width: 40px;
+  height: 40px;
   fill: currentColor;
 }
 
@@ -142,7 +142,7 @@ button {
   border: none;
   border-radius: var(--radius);
   cursor: pointer;
-  height: 88px;
+  height: 110px;
   width: 100%;
   transition: filter .1s, transform .07s;
   position: relative;
@@ -173,7 +173,7 @@ button:active::after { opacity: 1; }
 
 .btn-number {
   font-family: var(--jersey);
-  font-size: 2.4rem;
+  font-size: 3rem;
   line-height: 1;
   position: relative;
   z-index: 1;
@@ -181,7 +181,7 @@ button:active::after { opacity: 1; }
 
 .btn-name {
   font-family: var(--mono);
-  font-size: .52rem;
+  font-size: .62rem;
   letter-spacing: .14em;
   text-transform: uppercase;
   opacity: .8;

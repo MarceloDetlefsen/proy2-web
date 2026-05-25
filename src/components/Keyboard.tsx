@@ -64,7 +64,7 @@ export const Keyboard = ({
       <div className="keyboard-row keyboard-row--utilities">
         <CalcButton
           label="AC"
-          dataType="op"
+          dataType="equals"
           ariaLabel="clear"
           onClick={onClear}
         />
@@ -83,7 +83,7 @@ export const Keyboard = ({
         <button
           type="button"
           className="keyboard-row__github"
-          data-type="op"
+          data-type="equals"
           aria-label="Open GitHub repository"
           onClick={() => window.open(GITHUB_REPO_URL, '_blank', 'noopener,noreferrer')}
         >
