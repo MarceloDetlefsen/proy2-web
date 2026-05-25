@@ -1,13 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Anton&family=Bebas+Neue&display=swap');
 
 :root {
-  --bg:         #0b0c0e;
-  --panel:      #111318;
-  --border:     #2a2d36;
-  --amber:      #f59e0b;
-  --amber-glow: #fbbf24;
-  --amber-dim:  #92400e;
+  --bg:         #d1d8e0;
+  --panel:      #e8edf2;
+  --border:     #b0bac6;
+  --cyan:       #0ea5e9;
+  --cyan-glow:  #38bdf8;
+  --cyan-dim:   #0369a1;
   --red:        #ef4444;
+  --text-dark:  #1e293b;
   --mono:       'Share Tech Mono', monospace;
   --jersey:     'Anton', 'Bebas Neue', sans-serif;
   --radius:     8px;
@@ -23,8 +24,8 @@ body {
   justify-content: center;
   font-family: var(--mono);
   background-image:
-    linear-gradient(rgba(245,158,11,.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(245,158,11,.03) 1px, transparent 1px);
+    linear-gradient(rgba(14,165,233,.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14,165,233,.07) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
@@ -36,8 +37,8 @@ body {
   padding: 44px 32px 32px;
   width: 560px;
   box-shadow:
-    0 40px 100px rgba(0,0,0,.85),
-    0 0 0 1px rgba(245,158,11,.08);
+    0 20px 60px rgba(0,0,0,.18),
+    0 0 0 1px rgba(14,165,233,.15);
   position: relative;
   animation: fade-up .4s cubic-bezier(.22,1,.36,1) both;
 }
@@ -47,26 +48,26 @@ body {
   position: absolute;
   top: 0; left: 40px; right: 40px;
   height: 2px;
-  background: linear-gradient(90deg, transparent, var(--amber), transparent);
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
   border-radius: 0 0 2px 2px;
 }
 
 .calculator::after {
-  content: 'CALC-9000';
+  content: 'NBA CALCULATOR';
   position: absolute;
   top: 13px; left: 50%;
   transform: translateX(-50%);
   font-family: var(--jersey);
-  font-size: 9px;
+  font-size: 20px;
   letter-spacing: .4em;
-  color: var(--amber-dim);
+  color: var(--cyan-dim);
 }
 
 /* ── Display ── */
 output[aria-label="calculator display"] {
   display: block;
-  background: #060809;
-  border: 1px solid var(--border);
+  background: #0f172a;
+  border: 1px solid #1e293b;
   border-radius: var(--radius);
   margin: 28px 0 24px;
   padding: 20px 24px 16px;
@@ -75,17 +76,17 @@ output[aria-label="calculator display"] {
   font-size: 4rem;
   letter-spacing: .04em;
   line-height: 1;
-  color: var(--amber-glow);
+  color: var(--cyan-glow);
   text-shadow:
-    0 0 12px rgba(251,191,36,.6),
-    0 0 32px rgba(251,191,36,.22);
+    0 0 12px rgba(56,189,248,.65),
+    0 0 32px rgba(56,189,248,.25);
   min-height: 96px;
   overflow: hidden;
   background-image:
     repeating-linear-gradient(
       to bottom,
       transparent 0px, transparent 3px,
-      rgba(0,0,0,.13) 3px, rgba(0,0,0,.13) 4px
+      rgba(0,0,0,.15) 3px, rgba(0,0,0,.15) 4px
     );
   transition: color .15s;
 }
@@ -98,7 +99,7 @@ output[aria-label="calculator display"][data-error="true"] {
 }
 
 /* ── Keyboard ── */
-.keyboard { display: grid; gap: 12px; }
+.keyboard { display: grid; gap: 24px; }
 
 .keyboard-numbers {
   display: grid;
@@ -133,39 +134,24 @@ button {
   align-items: center;
   justify-content: center;
   gap: 3px;
+  /* sin textura — fondo plano */
 }
 
-button:hover  { filter: brightness(1.1); }
-button:active { transform: translateY(2px) scale(.97); filter: brightness(.88); }
-button:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+button:hover  { filter: brightness(1.08); }
+button:active { transform: translateY(2px) scale(.97); filter: brightness(.9); }
+button:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
 
+/* ripple al hacer click */
 button::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at center, rgba(255,255,255,.15) 0%, transparent 70%);
+  background: radial-gradient(circle at center, rgba(255,255,255,.2) 0%, transparent 70%);
   opacity: 0;
   transition: opacity .15s;
   pointer-events: none;
 }
 button:active::after { opacity: 1; }
-
-/* jersey mesh on number buttons */
-button[data-key]::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    repeating-linear-gradient(45deg,
-      rgba(255,255,255,.045) 0px, rgba(255,255,255,.045) 1px,
-      transparent 1px, transparent 6px),
-    repeating-linear-gradient(-45deg,
-      rgba(255,255,255,.045) 0px, rgba(255,255,255,.045) 1px,
-      transparent 1px, transparent 6px);
-  pointer-events: none;
-  border-radius: inherit;
-  z-index: 0;
-}
 
 .btn-number {
   font-family: var(--jersey);
@@ -187,131 +173,122 @@ button[data-key]::before {
 }
 
 /* ════════════════════════════════════════════════════
-   NBA JERSEY BUTTONS — colores planos fieles
+   NBA JERSEY BUTTONS — color plano + franja inferior
 ════════════════════════════════════════════════════ */
 
-/* 0 · Lillard · Blazers — blanco puro, detalle rojo abajo */
+/* 0 · Lillard · Blazers — blanco, franja roja */
 button[data-key="0"] {
-  background: #f5f5f5;
-  box-shadow: inset 0 -6px 0 #c8102e, 0 3px 12px rgba(0,0,0,.35);
+  background: #f0f0f0;
+  box-shadow: inset 0 -6px 0 #c8102e, 0 2px 8px rgba(0,0,0,.15);
 }
 button[data-key="0"] .btn-number { color: #1a1a1a; }
 button[data-key="0"] .btn-name   { color: #555; }
 
-/* 1 · Booker · Suns — naranja plano */
+/* 1 · Booker · Suns — naranja */
 button[data-key="1"] {
   background: #e56020;
-  box-shadow: inset 0 -6px 0 #b34a10, inset 0 1px 0 rgba(255,255,255,.15),
-              0 3px 12px rgba(229,96,32,.4);
+  box-shadow: inset 0 -6px 0 #a03d0a, 0 2px 8px rgba(229,96,32,.3);
 }
 button[data-key="1"] .btn-number { color: #fff; }
 button[data-key="1"] .btn-name   { color: rgba(255,255,255,.8); }
 
-/* 2 · Irving · Cavs — vino, número dorado */
+/* 2 · Irving · Cavs — vino, franja más oscura */
 button[data-key="2"] {
   background: #860027;
-  box-shadow: inset 0 -6px 0 #5a0018, inset 0 1px 0 rgba(255,255,255,.1),
-              0 3px 12px rgba(134,0,39,.5);
+  box-shadow: inset 0 -6px 0 #4a0015, 0 2px 8px rgba(134,0,39,.35);
 }
-button[data-key="2"] .btn-number { color: #fdbb30; text-shadow: 0 0 10px rgba(253,187,48,.5); }
-button[data-key="2"] .btn-name   { color: #fdbb30; opacity: .7; }
+button[data-key="2"] .btn-number { color: #fdbb30; }
+button[data-key="2"] .btn-name   { color: rgba(253,187,48,.75); }
 
-/* 3 · CP3 · The Valley — negro plano, franja naranja sunset abajo */
+/* 3 · CP3 · The Valley — negro, franja morada */
 button[data-key="3"] {
   background: #141414;
-  box-shadow: inset 0 -6px 0 #433b6c, inset 0 1px 0 rgba(255,255,255,.06),
-              0 3px 12px rgba(0,0,0,.6);
+  box-shadow: inset 0 -6px 0 #433b6c, 0 2px 8px rgba(0,0,0,.4);
 }
-button[data-key="3"] .btn-number { color: #e3e3e1; text-shadow: 0 0 10px rgba(229,92,0,.45); }
+button[data-key="3"] .btn-number { color: #e3e3e1; }
 button[data-key="3"] .btn-name   { color: rgba(229,92,0,.7); }
 
-/* 4 · Jalen Green · Suns — morado plano, detalle naranja */
+/* 4 · JG Green · Suns — morado medio, franja naranja */
 button[data-key="4"] {
   background: #1d1160;
-  box-shadow: inset 0 -6px 0 #e56020, inset 0 1px 0 rgba(255,255,255,.08),
-              0 3px 12px rgba(29,17,96,.55);
+  box-shadow: inset 0 -6px 0 #e56020, 0 2px 8px rgba(29,17,96,.4);
 }
 button[data-key="4"] .btn-number { color: #fff; }
 button[data-key="4"] .btn-name   { color: rgba(229,150,100,.85); }
 
-/* 5 · Edwards · Wolves — navy oscuro, detalle magenta */
+/* 5 · Edwards · Wolves — navy oscuro, franja magenta */
 button[data-key="5"] {
   background: #1d1d3a;
-  box-shadow: inset 0 -6px 0 #78238e, inset 0 1px 0 rgba(255,255,255,.06),
-              0 3px 12px rgba(29,29,58,.6);
+  box-shadow: inset 0 -6px 0 #78238e, 0 2px 8px rgba(29,29,58,.4);
 }
-button[data-key="5"] .btn-number { color: #c45fe0; text-shadow: 0 0 10px rgba(196,95,224,.5); }
+button[data-key="5"] .btn-number { color: #c45fe0; }
 button[data-key="5"] .btn-name   { color: rgba(196,95,224,.75); }
 
-/* 6 · LeBron · Lakers — amarillo dorado, detalle morado */
+/* 6 · LeBron · Lakers — dorado, franja morada */
 button[data-key="6"] {
   background: #fdb927;
-  box-shadow: inset 0 -6px 0 #552583, inset 0 1px 0 rgba(255,255,255,.2),
-              0 3px 12px rgba(253,185,39,.45);
+  box-shadow: inset 0 -6px 0 #552583, 0 2px 8px rgba(253,185,39,.35);
 }
 button[data-key="6"] .btn-number { color: #552583; }
 button[data-key="6"] .btn-name   { color: rgba(85,37,131,.8); }
 
-/* 7 · Durant · Nets — negro total */
+/* 7 · Durant · Nets — negro, franja blanca */
 button[data-key="7"] {
-  background: #111;
-  border: 1px solid #2a2a2a;
-  box-shadow: inset 0 -6px 0 #000, 0 3px 12px rgba(0,0,0,.7);
+  background: #111111;
+  box-shadow: inset 0 -6px 0 #444, 0 2px 8px rgba(0,0,0,.5);
 }
 button[data-key="7"] .btn-number { color: #fff; }
 button[data-key="7"] .btn-name   { color: rgba(255,255,255,.55); }
 
-/* 8 · Allen · Suns City — morado muy oscuro (distinto al #4), franja teal */
+/* 8 · Allen · Suns City — morado profundo (≠ JG Green), franja rojo-ladrillo */
 button[data-key="8"] {
   background: #2a1d48;
-  box-shadow: inset 0 -6px 0 #d05751, inset 0 1px 0 rgba(255,255,255,.07),
-              0 3px 12px rgba(26,10,64,.6);
+  box-shadow: inset 0 -6px 0 #c0392b, 0 2px 8px rgba(42,29,72,.45);
 }
 button[data-key="8"] .btn-number { color: #fff; }
 button[data-key="8"] .btn-name   { color: rgba(0,180,200,.85); }
 
-/* 9 · McConnell · Pacers — amarillo plano, franja navy abajo */
+/* 9 · McConnell · Pacers — amarillo, franja navy */
 button[data-key="9"] {
   background: #ffc72c;
-  box-shadow: inset 0 -6px 0 #002d62, inset 0 1px 0 rgba(255,255,255,.25),
-              0 3px 12px rgba(255,199,44,.4);
+  box-shadow: inset 0 -6px 0 #002d62, 0 2px 8px rgba(255,199,44,.3);
 }
 button[data-key="9"] .btn-number { color: #002d62; }
 button[data-key="9"] .btn-name   { color: rgba(0,45,98,.75); }
 
 /* ── Op buttons ── */
 button[data-type="op"] {
-  background: #1a1d24;
-  color: var(--amber);
-  border: 1px solid rgba(245,158,11,.2);
+  background: #1e293b;
+  color: var(--cyan-glow);
+  border: 1px solid rgba(14,165,233,.25);
   font-family: var(--jersey);
   font-size: 1.8rem;
   box-shadow:
-    inset 0 -4px 0 rgba(0,0,0,.4),
+    inset 0 -4px 0 rgba(0,0,0,.35),
     inset 0 1px 0 rgba(255,255,255,.05);
 }
 button[data-type="op"]:hover {
-  background: #22262f;
-  border-color: rgba(245,158,11,.4);
-  box-shadow: 0 0 14px rgba(245,158,11,.12),
-    inset 0 -4px 0 rgba(0,0,0,.4);
+  background: #263347;
+  border-color: rgba(14,165,233,.5);
+  box-shadow: 0 0 14px rgba(14,165,233,.15),
+    inset 0 -4px 0 rgba(0,0,0,.35);
 }
 
 /* ── Equals ── */
 button[data-type="equals"] {
-  background: var(--amber);
-  color: #0b0c0e;
+  background: var(--cyan);
+  color: #fff;
   font-family: var(--jersey);
   font-size: 2rem;
   box-shadow:
-    0 0 22px rgba(245,158,11,.35),
-    inset 0 1px 0 rgba(255,255,255,.3),
+    0 0 22px rgba(14,165,233,.4),
+    inset 0 1px 0 rgba(255,255,255,.25),
     inset 0 -4px 0 rgba(0,0,0,.2);
 }
 button[data-type="equals"]:hover {
-  background: var(--amber-glow);
-  box-shadow: 0 0 32px rgba(245,158,11,.5),
-    inset 0 1px 0 rgba(255,255,255,.35);
+  background: var(--cyan-glow);
+  box-shadow: 0 0 32px rgba(14,165,233,.55),
+    inset 0 1px 0 rgba(255,255,255,.3);
 }
 
 @keyframes fade-up {
