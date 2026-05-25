@@ -11,7 +11,7 @@ export const Calculator = () => {
   } = useCalculator()
 
   return (
-    <div>
+    <div className="calculator" role="application" aria-label="Calculator">
       <Display value={display} />
       <Keyboard
         onNumber={handleNumber}
