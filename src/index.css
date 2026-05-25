@@ -34,13 +34,28 @@ body {
   background: var(--panel);
   border: 1px solid var(--border);
   border-radius: 18px;
-  padding: 44px 32px 32px;
+  padding: 20px 32px 32px;
   width: 560px;
   box-shadow:
     0 20px 60px rgba(0,0,0,.18),
     0 0 0 1px rgba(14,165,233,.15);
   position: relative;
+  display: grid;
+  gap: 24px;
   animation: fade-up .4s cubic-bezier(.22,1,.36,1) both;
+}
+
+.calculator__header {
+  display: flex;
+  justify-content: center;
+}
+
+.calculator__header h2 {
+  font-family: var(--jersey);
+  font-size: 20px;
+  letter-spacing: .4em;
+  color: var(--cyan-dim);
+  white-space: nowrap;
 }
 
 .calculator::before {
@@ -52,24 +67,12 @@ body {
   border-radius: 0 0 2px 2px;
 }
 
-.calculator::after {
-  content: 'NBA CALCULATOR';
-  position: absolute;
-  top: 13px; left: 50%;
-  transform: translateX(-50%);
-  font-family: var(--jersey);
-  font-size: 20px;
-  letter-spacing: .4em;
-  color: var(--cyan-dim);
-}
-
 /* ── Display ── */
 output[aria-label="calculator display"] {
   display: block;
   background: #0f172a;
   border: 1px solid #1e293b;
   border-radius: var(--radius);
-  margin: 28px 0 24px;
   padding: 20px 24px 16px;
   text-align: right;
   font-family: var(--mono);
@@ -99,22 +102,37 @@ output[aria-label="calculator display"][data-error="true"] {
 }
 
 /* ── Keyboard ── */
-.keyboard { display: grid; gap: 24px; }
-
-.keyboard-numbers {
+.keyboard {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
   gap: 12px;
 }
 
-.keyboard-numbers button[data-key="0"] {
-  grid-column: span 2;
-}
-
-.keyboard-ops {
+.keyboard-row {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
+}
+
+.keyboard-row--utilities {
+  align-items: stretch;
+}
+
+.keyboard-row__github {
+  justify-self: stretch;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.keyboard-row__github svg {
+  width: 34px;
+  height: 34px;
+  fill: currentColor;
+}
+
+.keyboard-row--bottom button[data-key="0"] {
+  grid-column: span 2;
 }
 
 /* ── Base button ── */

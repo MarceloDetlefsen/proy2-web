@@ -9,8 +9,10 @@ describe('Calculator component', () => {
     const { container } = render(<Calculator />)
 
     const getDisplay = () => container.querySelector('output')
+    const githubButton = within(container).getByRole('button', { name: 'Open GitHub repository' })
 
-    expect(getDisplay()).toHaveTextContent('')
+    expect(getDisplay()).toHaveTextContent('0')
+    expect(githubButton).toBeInTheDocument()
 
     await user.click(within(container).getByRole('button', { name: '5' }))
     await user.click(within(container).getByRole('button', { name: '+' }))
@@ -18,5 +20,9 @@ describe('Calculator component', () => {
     await user.click(within(container).getByRole('button', { name: '=' }))
 
     expect(getDisplay()).toHaveTextContent('8')
+
+    await user.click(within(container).getByRole('button', { name: 'clear' }))
+
+    expect(getDisplay()).toHaveTextContent('0')
   })
 })
