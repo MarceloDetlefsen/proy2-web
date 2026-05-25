@@ -33,7 +33,7 @@ const GITHUB_ICON_PATH = [
 export interface KeyboardProps {
   onClear: () => void
   onNumber: (value: string) => void
-  onOperation: (value: '+' | '-' | '*' | '%') => void
+  onOperation: (value: '+' | '-' | '*' | '%' | '/') => void
   onDecimal: () => void
   onToggleSign: () => void
   onEquals: () => void
@@ -45,10 +45,10 @@ const numbers: Array<{ key: string; player: string }> = [
   { key: '9', player: 'McConnell' },
   { key: '4', player: 'Green' },
   { key: '5', player: 'Edwards' },
-  { key: '6', player: 'LeBron' },
+  { key: '6', player: 'James' },
   { key: '1', player: 'Booker' },
   { key: '2', player: 'Irving' },
-  { key: '3', player: 'CP3' },
+  { key: '3', player: 'Paul' },
 ]
 
 export const Keyboard = ({
@@ -60,112 +60,57 @@ export const Keyboard = ({
   onEquals,
 }: KeyboardProps) => {
   return (
-    <div className="keyboard" role="group" aria-label="Calculator keys">
-      <div className="keyboard-row keyboard-row--utilities">
-        <CalcButton
-          label="AC"
-          dataType="equals"
-          ariaLabel="clear"
-          onClick={onClear}
-        />
-        <CalcButton
-          label="+/-"
-          dataType="op"
-          ariaLabel="toggle sign"
-          onClick={onToggleSign}
-        />
-        <CalcButton
-          label="%"
-          dataType="op"
-          ariaLabel="%"
-          onClick={() => onOperation('%')}
-        />
-        <button
-          type="button"
-          className="keyboard-row__github"
-          data-type="equals"
-          aria-label="Open GitHub repository"
-          onClick={() => window.open(GITHUB_REPO_URL, '_blank', 'noopener,noreferrer')}
-        >
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d={GITHUB_ICON_PATH} />
-          </svg>
-        </button>
+    <>
+      <button
+        type="button"
+        className="github-fab"
+        aria-label="Open GitHub repository"
+        onClick={() => window.open(GITHUB_REPO_URL, '_blank', 'noopener,noreferrer')}
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d={GITHUB_ICON_PATH} />
+        </svg>
+      </button>
+      <div className="keyboard" role="group" aria-label="Calculator keys">
+        <div className="keyboard-row keyboard-row--utilities">
+          <CalcButton label="AC" dataType="equals" ariaLabel="clear" onClick={onClear} />
+          <CalcButton label="+/-" dataType="op" ariaLabel="toggle sign" onClick={onToggleSign} />
+          <CalcButton label="%" dataType="op" ariaLabel="%" onClick={() => onOperation('%')} />
+          <CalcButton label="÷" dataType="op" ariaLabel="÷" onClick={() => onOperation('/')} />
+        </div>
+        <div className="keyboard-row keyboard-row--numbers">
+          {numbers.slice(0, 3).map(({ key, player }) => (
+            <CalcButton
+              key={key} label={key} dataKey={key} playerName={player}
+              onClick={() => onNumber(key)}
+            />
+          ))}
+          <CalcButton label="×" dataType="op" ariaLabel="*" onClick={() => onOperation('*')} />
+        </div>
+        <div className="keyboard-row keyboard-row--numbers">
+          {numbers.slice(3, 6).map(({ key, player }) => (
+            <CalcButton
+              key={key} label={key} dataKey={key} playerName={player}
+              onClick={() => onNumber(key)}
+            />
+          ))}
+          <CalcButton label="−" dataType="op" ariaLabel="-" onClick={() => onOperation('-')} />
+        </div>
+        <div className="keyboard-row keyboard-row--numbers">
+          {numbers.slice(6).map(({ key, player }) => (
+            <CalcButton
+              key={key} label={key} dataKey={key} playerName={player}
+              onClick={() => onNumber(key)}
+            />
+          ))}
+          <CalcButton label="+" dataType="op" ariaLabel="+" onClick={() => onOperation('+')} />
+        </div>
+        <div className="keyboard-row keyboard-row--bottom">
+          <CalcButton label="0" dataKey="0" playerName="Lillard" onClick={() => onNumber('0')} />
+          <CalcButton label="." dataType="op" ariaLabel="decimal point" onClick={onDecimal} />
+          <CalcButton label="=" dataType="equals" onClick={onEquals} />
+        </div>
       </div>
-
-      <div className="keyboard-row keyboard-row--numbers">
-        {numbers.slice(0, 3).map(({ key, player }) => (
-          <CalcButton
-            key={key}
-            label={key}
-            dataKey={key}
-            playerName={player}
-            onClick={() => onNumber(key)}
-          />
-        ))}
-        <CalcButton
-          label="×"
-          dataType="op"
-          ariaLabel="*"
-          onClick={() => onOperation('*')}
-        />
-      </div>
-
-      <div className="keyboard-row keyboard-row--numbers">
-        {numbers.slice(3, 6).map(({ key, player }) => (
-          <CalcButton
-            key={key}
-            label={key}
-            dataKey={key}
-            playerName={player}
-            onClick={() => onNumber(key)}
-          />
-        ))}
-        <CalcButton
-          label="−"
-          dataType="op"
-          ariaLabel="-"
-          onClick={() => onOperation('-')}
-        />
-      </div>
-
-      <div className="keyboard-row keyboard-row--numbers">
-        {numbers.slice(6).map(({ key, player }) => (
-          <CalcButton
-            key={key}
-            label={key}
-            dataKey={key}
-            playerName={player}
-            onClick={() => onNumber(key)}
-          />
-        ))}
-        <CalcButton
-          label="+"
-          dataType="op"
-          ariaLabel="+"
-          onClick={() => onOperation('+')}
-        />
-      </div>
-
-      <div className="keyboard-row keyboard-row--bottom">
-        <CalcButton
-          label="0"
-          dataKey="0"
-          playerName="Lillard"
-          onClick={() => onNumber('0')}
-        />
-        <CalcButton
-          label="."
-          dataType="op"
-          ariaLabel="decimal point"
-          onClick={onDecimal}
-        />
-        <CalcButton
-          label="="
-          dataType="equals"
-          onClick={onEquals}
-        />
-      </div>
-    </div>
+    </>
   )
 }
